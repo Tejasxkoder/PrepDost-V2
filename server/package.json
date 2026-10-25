@@ -1,0 +1,56 @@
+{
+  "name": "prepdost-server",
+  "version": "2.0.0",
+  "description": "PrepDost Backend API",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx --env-file=.env src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "seed": "tsx --env-file=.env src/scripts/seed.ts",
+    "typecheck": "tsc --noEmit",
+    "make-admin": "tsx --env-file=.env src/scripts/make-admin.ts",
+    "notify": "tsx --env-file=.env src/scripts/notify.ts"
+  },
+  "keywords": [
+    "prepdost",
+    "express",
+    "typescript",
+    "mongodb",
+    "jwt"
+  ],
+  "author": "Tejas Kumar",
+  "license": "MIT",
+  "dependencies": {
+    "@deepgram/sdk": "^5.8.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.0",
+    "multer": "^2.2.0",
+    "nodemailer": "^10.1.2",
+    "openai": "^7.5.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/express-rate-limit": "^5.1.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^25.9.5",
+    "@types/nodemailer": "^8.0.2",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  }
+}
