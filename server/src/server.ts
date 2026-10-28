@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-import app from "./app.js";
+import app from "../src/app.js";
 import { connectDatabase } from "./config/database.js";
 
 dotenv.config();
@@ -43,5 +43,5 @@ const startServer = async (): Promise<void> => {
     process.exit(1);
   }
 };
-
+                            
 void startServer();
