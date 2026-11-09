@@ -5,6 +5,10 @@ import cors from "cors"
 import helmet from "helmet"
 import mongoose from "mongoose"
 import { apiLimiter } from "./middlewares/rate-limit.middleware.js"
+import notificationRouter from "./routes/notification.route.js"
+import userRouter from "./routes/user.route.js"
+import authRouter from "./routes/auth.route.js"
+
 import {
   errorHandler,
   notFound,
@@ -38,7 +42,10 @@ app.get("/api/v1/health", (_req: Request, res: Response) => {
   })
 })
 
+app.use("/api/v1/auth", authRouter)
 app.use("/api/v1", apiLimiter)
+app.use("/api/v1/notifications", notificationRouter)
+app.use("api/v1/users",userRouter)
 
 app.use(notFound)
 app.use(errorHandler)
