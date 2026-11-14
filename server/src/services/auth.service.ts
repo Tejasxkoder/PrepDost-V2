@@ -70,7 +70,7 @@ export type RegisterInput =
 export type LoginInput =
   z.infer<typeof loginSchema>
 
-const issueSession = (user: {
+export const issueSession = (user: {
   _id: { toString(): string }
   email: string
   role: string

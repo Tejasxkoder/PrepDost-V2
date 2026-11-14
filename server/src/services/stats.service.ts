@@ -180,7 +180,6 @@ const getRecentActivity = async (userId: string) => {
 }
 
 const calculateStreak = async (userId: string) => {
-  // Get all activity dates
   const activities = await ActivityModel.find({
     user: userId,
     type: { $in: ["interview_completed", "problem_solved"] },
@@ -262,7 +261,6 @@ export const logActivity = async (
   metadata: Record<string, any>
 ) => {
   await ActivityModel.create({ user: userId, type, metadata })
-  // A notification problem must never fail the request that already saved the interview/submission.
   try {
     await notifyFromActivity(userId, type, metadata)
   } catch (error) {

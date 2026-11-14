@@ -1,11 +1,9 @@
 import { RevokedTokenModel } from "../models/revoked-token.model.js"
 
-/** Blocks a token until it would have expired anyway. Safe to call twice. */
 export const revokeToken = async (
   jti: string | undefined,
   expSeconds: number | undefined
 ): Promise<void> => {
-  // Tokens issued before the blocklist existed carry no jti; they simply run out.
   if (!jti || !expSeconds) return
 
   await RevokedTokenModel.updateOne(

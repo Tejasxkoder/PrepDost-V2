@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "google-auth-library": "^11.3.3",
+    "zod": "^4.6.7"
+  }
+}

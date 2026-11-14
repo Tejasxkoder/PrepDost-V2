@@ -1,23 +1,30 @@
+import mongoose, { Document, Schema } from "mongoose"
 
-import mongoose, { Document, Schema } from "mongoose";
-
-export type UserRole = "user" | "admin";
+export type UserRole = "user" | "admin"
 
 export interface IUser extends Document {
-  _id: mongoose.Types.ObjectId;
-  name: string;
-  email: string;
-  password?: string;
-  avatar?: string;
-  githubUsername?: string;
-  leetcodeUsername?: string;
-  role: UserRole;
-  isActive: boolean;
-  emailVerified: boolean;
-  tokenVersion: number;
-  lastLoginAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  _id: mongoose.Types.ObjectId
+
+  name: string
+  email: string
+  password?: string
+
+  avatar?: string
+
+  googleId?: string
+
+  githubUsername?: string
+  leetcodeUsername?: string
+
+  role: UserRole
+  isActive: boolean
+  emailVerified: boolean
+  tokenVersion: number
+
+  lastLoginAt?: Date
+
+  createdAt: Date
+  updatedAt: Date
 }
 
 const userSchema = new Schema<IUser>(
@@ -36,18 +43,29 @@ const userSchema = new Schema<IUser>(
       unique: true,
       lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
+      match: [
+        /^\S+@\S+\.\S+$/,
+        "Please enter a valid email",
+      ],
     },
 
     password: {
       type: String,
-      minlength: [8, "Password must be at least 8 characters"],
+      minlength: [
+        8,
+        "Password must be at least 8 characters",
+      ],
       select: false,
     },
 
     avatar: {
       type: String,
       default: null,
+    },
+
+    googleId: {
+      type: String,
+      trim: true,
     },
 
     githubUsername: {
@@ -76,7 +94,7 @@ const userSchema = new Schema<IUser>(
 
     emailVerified: {
       type: Boolean,
-      default: false,
+      default: true,
     },
 
     tokenVersion: {
@@ -92,20 +110,36 @@ const userSchema = new Schema<IUser>(
   {
     timestamps: true,
     versionKey: false,
-  },
-);
+  }
+)
 
-userSchema.index({ githubUsername: 1 });
-userSchema.index({ role: 1, isActive: 1 });
-userSchema.index({ lastLoginAt: -1 });
+userSchema.index(
+  { googleId: 1 },
+  { unique: true, partialFilterExpression: { googleId: { $type: "string" } } }
+)
+
+userSchema.index({
+  githubUsername: 1,
+})
+
+userSchema.index({
+  role: 1,
+  isActive: 1,
+})
+
+userSchema.index({
+  lastLoginAt: -1,
+})
 
 userSchema.methods.toJSON = function () {
-  const user = this.toObject();
+  const user = this.toObject()
+  delete user.password
+  delete user.tokenVersion
+  delete user.googleId
+  return user
+}
 
-  delete user.password;
-  delete user.tokenVersion;
-
-  return user;
-};
-
-export const UserModel = mongoose.model<IUser>("User", userSchema);
+export const UserModel = mongoose.model<IUser>(
+  "User",
+  userSchema
+)
