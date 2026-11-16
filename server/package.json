@@ -24,7 +24,7 @@
   "author": "Tejas Kumar",
   "license": "MIT",
   "dependencies": {
-    "@deepgram/sdk": "^5.8.0",
+    "@deepgram/sdk": "^5.20.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
