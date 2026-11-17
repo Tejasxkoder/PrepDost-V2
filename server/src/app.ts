@@ -38,6 +38,7 @@ app.use(
   })
 )
 
+
 app.use((_req: Request, res: Response, next) => {
   if (isShuttingDown()) res.set("Connection", "close")
   next()
@@ -69,6 +70,7 @@ app.post(
   ],
   authLimiter
 )
+
 app.post(
   ["/api/v1/auth/forgot-password", "/api/v1/auth/resend-verification"],
   otpLimiter
@@ -77,6 +79,7 @@ app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/problems", problemRouter)
 app.use("/api/v1/notifications", notificationRouter)
+
 app.use("/api/v1/interviews", heavyLimiter, interviewRouter)
 app.use("/api/v1/submissions", heavyLimiter, submissionRouter)
 app.use("/api/v1/voice", heavyLimiter, voiceRouter)

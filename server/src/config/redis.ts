@@ -20,6 +20,7 @@ export const getRedis = (): Redis | undefined => {
   }
 
   client = new Redis(url, {
+
     family: 0,
     connectTimeout: 5_000,
     commandTimeout: 750,

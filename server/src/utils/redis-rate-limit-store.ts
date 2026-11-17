@@ -2,7 +2,6 @@ import type { Redis } from "ioredis"
 import type { ClientRateLimitInfo, IncrementResponse, Options, Store } from "express-rate-limit"
 import { logger } from "./logger.js"
 
-
 const HIT_SCRIPT = `
 local hits = redis.call('INCR', KEYS[1])
 local ttl = redis.call('PTTL', KEYS[1])
@@ -17,6 +16,7 @@ interface RateLimitCommands {
   rateLimitHit(key: string, windowMs: number): Promise<[number, number]>
 }
 
+
 export class RedisRateLimitStore implements Store {
   readonly prefix: string
   readonly localKeys = false
@@ -30,7 +30,6 @@ export class RedisRateLimitStore implements Store {
     this.prefix = prefix
 
     if (!("rateLimitHit" in redis)) {
-     
       redis.defineCommand("rateLimitHit", { numberOfKeys: 1, lua: HIT_SCRIPT })
     }
   }
@@ -72,7 +71,6 @@ export class RedisRateLimitStore implements Store {
         })
       }
 
-      // the library insists on a positive count; 1 is always under any real limit
       return { totalHits: 1, resetTime: new Date(Date.now() + this.windowMs) }
     }
   }
@@ -81,7 +79,6 @@ export class RedisRateLimitStore implements Store {
     try {
       await this.redis.decr(this.key(key))
     } catch {
-      // only used to undo a count; losing it just means one extra hit is remembered
     }
   }
 
