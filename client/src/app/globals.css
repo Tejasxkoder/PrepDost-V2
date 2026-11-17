@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ───────── Design tokens (ported 1:1 from the HTML prototype) ───────── */
+:root {
+  color-scheme: dark;
+  --bg-0: #070b09;
+  --bg-1: #0c1310;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-soft: rgba(255, 255, 255, 0.06);
+  --text-0: #f2f5f2;
+  --text-1: #aab4ae;
+  --text-2: #6f7a74;
+  --amber: #f6c453;
+  --rose: #f2748a;
+  --on-accent: #08150d;
+  /* accent (default: emerald) */
+  --accent: #4ade80;
+  --accent-dim: #2f9a5c;
+  --accent-rgb: 74, 222, 128;
+}
+
+:root.light {
+  color-scheme: light;
+  --bg-0: #f2f5f1;
+  --bg-1: #ffffff;
+  --surface: rgba(255, 255, 255, 0.55);
+  --surface-strong: rgba(255, 255, 255, 0.85);
+  --border: rgba(15, 25, 18, 0.1);
+  --border-soft: rgba(15, 25, 18, 0.06);
+  --text-0: #10140f;
+  --text-1: #57635a;
+  --text-2: #8b978e;
+}
+
+/* accent presets — switched via <html data-accent="…"> */
+:root[data-accent="violet"] {
+  --accent: #a78bfa;
+  --accent-dim: #7c5ce0;
+  --accent-rgb: 167, 139, 250;
+}
+:root[data-accent="sky"] {
+  --accent: #38bdf8;
+  --accent-dim: #2496c8;
+  --accent-rgb: 56, 189, 248;
+}
+:root[data-accent="amber"] {
+  --accent: #fbbf24;
+  --accent-dim: #c9940f;
+  --accent-rgb: 251, 191, 36;
+}
+:root[data-accent="rose"] {
+  --accent: #fb7185;
+  --accent-dim: #d14a63;
+  --accent-rgb: 251, 113, 133;
+}
+
+@theme inline {
+  --color-bg: var(--bg-0);
+  --color-bg-elevated: var(--bg-1);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-fg: var(--text-0);
+  --color-fg-muted: var(--text-1);
+  --color-fg-subtle: var(--text-2);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-on-accent: var(--on-accent);
+  --color-amber: var(--amber);
+  --color-rose: var(--rose);
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --font-sans: "Space Grotesk Variable", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "SFMono-Regular", Consolas, monospace;
+
+  /* sidebar appears above 860px, exactly like the prototype */
+  --breakpoint-shell: 861px;
+
+  --animate-rise: rise 0.5s ease forwards;
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border-soft);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    min-height: 100dvh;
+    overflow-x: clip;
+    background:
+      radial-gradient(1100px 620px at 14% -8%, rgba(var(--accent-rgb), 0.1), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(var(--accent-rgb), 0.05), transparent 55%),
+      var(--bg-0);
+    background-attachment: fixed;
+    color: var(--text-0);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid rgba(var(--accent-rgb), 0.6);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
