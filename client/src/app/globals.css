@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-/* ───────── Design tokens (ported 1:1 from the HTML prototype) ───────── */
 :root {
   color-scheme: dark;
   --bg-0: #070b09;
@@ -17,7 +15,6 @@
   --amber: #f6c453;
   --rose: #f2748a;
   --on-accent: #08150d;
-  /* accent (default: emerald) */
   --accent: #4ade80;
   --accent-dim: #2f9a5c;
   --accent-rgb: 74, 222, 128;
@@ -36,7 +33,6 @@
   --text-2: #8b978e;
 }
 
-/* accent presets — switched via <html data-accent="…"> */
 :root[data-accent="violet"] {
   --accent: #a78bfa;
   --accent-dim: #7c5ce0;
@@ -81,7 +77,6 @@
   --font-sans: "Space Grotesk Variable", "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono Variable", "SFMono-Regular", Consolas, monospace;
 
-  /* sidebar appears above 860px, exactly like the prototype */
   --breakpoint-shell: 861px;
 
   --animate-rise: rise 0.5s ease forwards;
